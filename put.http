@@ -1,0 +1,9 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+PUT https://localhost:7294/api/books/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Advanced C#",
+  "author": "Adan"
+}
