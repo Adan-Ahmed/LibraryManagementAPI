@@ -9,34 +9,35 @@ namespace WebApplication1.Controllers;
 public class BooksController : ControllerBase
 {
     private readonly LibraryDbContext _context;
-    public BooksController(BookService bookService) 
+
+    public BooksController(LibraryDbContext context) 
     {
-        _bookService = bookService;
+        _context = context;
     }
 
     [HttpGet]
     public List<Book> GetBooks() 
     {
 
-        return _bookService.Books;
+        return _context.Books.ToList();
 
     }
 
     [HttpPost]
     public IActionResult AddBook([FromBody] Book book)
     {
-        if(_bookService.Books.Any(b => b.Id == book.Id)) 
+        if(_context.Books.Any(b => b.Id == book.Id)) 
         {
             return BadRequest("A book with this ID already exists.");
         }
-        _bookService.Books.Add(book);
+        _context.Books.Add(book);
         return Ok(book);
     }
 
     [HttpPut("{id}")]
     public IActionResult UpdateBook(int id, [FromBody] Book updateBook)
     {
-        var book = _bookService.Books.FirstOrDefault(b => b.Id == id);
+        var book = _context.Books.FirstOrDefault(b => b.Id == id);
 
         if (book == null) 
         {
@@ -51,14 +52,14 @@ public class BooksController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteBook(int id)
     {
-        var book = _bookService.Books.FirstOrDefault(b => b.Id == id);
+        var book = _context.Books.FirstOrDefault(b => b.Id == id);
 
         if (book == null)
         {
             return NotFound();
         }
 
-        _bookService.Books.Remove(book);
+        _context.Books.Remove(book);
 
         return NoContent();
     }
