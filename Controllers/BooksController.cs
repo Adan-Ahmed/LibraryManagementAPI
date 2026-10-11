@@ -31,6 +31,7 @@ public class BooksController : ControllerBase
             return BadRequest("A book with this ID already exists.");
         }
         _context.Books.Add(book);
+        _context.SaveChanges();
         return Ok(book);
     }
 
@@ -46,6 +47,7 @@ public class BooksController : ControllerBase
             book.Title = updateBook.Title;
             book.Author = updateBook.Author;
 
+        _context.SaveChanges();
         return Ok(book);
     }
 
@@ -60,7 +62,7 @@ public class BooksController : ControllerBase
         }
 
         _context.Books.Remove(book);
-
+        _context.SaveChanges();
         return NoContent();
     }
 
