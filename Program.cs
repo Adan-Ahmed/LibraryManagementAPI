@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Services;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<BookService>();
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
