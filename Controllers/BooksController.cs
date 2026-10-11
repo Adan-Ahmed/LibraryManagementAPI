@@ -1,5 +1,4 @@
-﻿using WebApplication1.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers;
 
