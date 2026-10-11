@@ -8,7 +8,7 @@ namespace WebApplication1.Controllers;
 
 public class BooksController : ControllerBase
 {
-    private readonly BookService _bookService;
+    private readonly LibraryDbContext _context;
     public BooksController(BookService bookService) 
     {
         _bookService = bookService;
