@@ -1,8 +1,8 @@
 
-PUT http://localhost:5102/api/books/1
+PUT http://localhost:5102/api/books/2
 Content-Type: application/json
 
 {
-  "title": "Advanced C# Programming",
-  "author": "Joseph Albahari"
+  "title": "Python",
+  "author": "Harry"
 }

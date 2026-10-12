@@ -22,6 +22,18 @@ public class BooksController : ControllerBase
 
     }
 
+    [HttpGet("{id}")]
+    public IActionResult GetBookByID(int id) 
+    {
+        var book = _context.Books.FirstOrDefault(b => b.Id == id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        return Ok(book);
+
+    }
+
     [HttpPost]
     public IActionResult AddBook([FromBody] CreateBookDto bookDto)
     {
