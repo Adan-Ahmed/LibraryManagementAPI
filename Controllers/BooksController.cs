@@ -37,7 +37,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateBook(int id, [FromBody] Book updateBook)
+    public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto UpdateDto)
     {
         var book = _context.Books.FirstOrDefault(b => b.Id == id);
 
@@ -45,8 +45,8 @@ public class BooksController : ControllerBase
         {
             return NotFound();
         }
-            book.Title = updateBook.Title;
-            book.Author = updateBook.Author;
+            book.Title = UpdateDto.Title;
+            book.Author = UpdateDto.Author;
 
         _context.SaveChanges();
         return Ok(book);
