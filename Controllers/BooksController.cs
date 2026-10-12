@@ -45,7 +45,12 @@ public class BooksController : ControllerBase
 
         _context.Books.Add(book);
         _context.SaveChanges();
-        return Ok(book);
+        return CreatedAtAction
+            (
+               nameof(GetBookByID),
+               new {id = book.Id},
+               book
+            );
     }
 
     [HttpPut("{id}")]
