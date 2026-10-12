@@ -10,7 +10,7 @@ public class Book
     public string Title { get; set; }
 
     [Required]
-    [StringLength (100)]
+    [StringLength (60)]
     public string Author { get; set; }
 
 }
