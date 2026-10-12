@@ -57,7 +57,7 @@ public class BooksController : ControllerBase
     {
         var book = _context.Books.FirstOrDefault(b => b.Id == id);
 
-        if (book == null)s
+        if (book == null)
         {
             return NotFound();
         }
