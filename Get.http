@@ -1,3 +1,3 @@
 
-GET https://localhost:7294/api/books
+GET http://localhost:5102/api/books
 Accept: application/json

@@ -25,10 +25,6 @@ public class BooksController : ControllerBase
     [HttpPost]
     public IActionResult AddBook([FromBody] Book book)
     {
-        if(_context.Books.Any(b => b.Id == book.Id)) 
-        {
-            return BadRequest("A book with this ID already exists.");
-        }
         _context.Books.Add(book);
         _context.SaveChanges();
         return Ok(book);
