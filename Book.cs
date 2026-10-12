@@ -7,10 +7,10 @@ public class Book
 
     [Required]
     [StringLength (100)]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Required]
     [StringLength (60)]
-    public string Author { get; set; }
+    public string Author { get; set; } = string.Empty;
 
 }

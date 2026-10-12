@@ -23,8 +23,14 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddBook([FromBody] Book book)
+    public IActionResult AddBook([FromBody] CreateBookDto bookDto)
     {
+        var book = new Book
+        {
+            Title = bookDto.Title,
+            Author = bookDto.Author
+        };
+
         _context.Books.Add(book);
         _context.SaveChanges();
         return Ok(book);
@@ -51,7 +57,7 @@ public class BooksController : ControllerBase
     {
         var book = _context.Books.FirstOrDefault(b => b.Id == id);
 
-        if (book == null)
+        if (book == null)s
         {
             return NotFound();
         }
