@@ -3,6 +3,6 @@ POST http://localhost:5102/api/books
 Content-Type: application/json
 
 {
-  "title": "ASP.NET Core Basics",
-  "author": "Adan Ahmed"
+  "title": "Java",
+  "author": "Miss Usra"
 }
