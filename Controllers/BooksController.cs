@@ -25,9 +25,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetBookByID(int id) 
+    public async Task<IActionResult> GetBookByID(int id) 
     {
-        var book = _context.Books.FirstOrDefault(b => b.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
         if (book == null)
         {
             return NotFound();
@@ -56,7 +56,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto UpdateDto)
+    public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto updateDto)
     {
         var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
 
@@ -64,8 +64,8 @@ public class BooksController : ControllerBase
         {
             return NotFound();
         }
-            book.Title = UpdateDto.Title;
-            book.Author = UpdateDto.Author;
+            book.Title = updateDto.Title;
+            book.Author = updateDto.Author;
 
         await _context.SaveChangesAsync();
         return Ok(book);
