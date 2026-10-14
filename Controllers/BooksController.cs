@@ -17,10 +17,10 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public List<Book> GetBooks() 
+    public async Task<List<Book>> GetBooks() 
     {
 
-        return _context.Books.ToList();
+        return await _context.Books.ToListAsync();
 
     }
 
@@ -37,7 +37,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddBook([FromBody] CreateBookDto bookDto)
+    public async Task<IActionResult> AddBook([FromBody] CreateBookDto bookDto)
     {
         var book = new Book
         {
@@ -46,7 +46,7 @@ public class BooksController : ControllerBase
         };
 
         _context.Books.Add(book);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return CreatedAtAction
             (
                nameof(GetBookByID),
@@ -56,9 +56,9 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto UpdateDto)
+    public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto UpdateDto)
     {
-        var book = _context.Books.FirstOrDefault(b => b.Id == id);
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null) 
         {
@@ -67,7 +67,7 @@ public class BooksController : ControllerBase
             book.Title = UpdateDto.Title;
             book.Author = UpdateDto.Author;
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
         return Ok(book);
     }
 
@@ -85,7 +85,5 @@ public class BooksController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
-
-
 
 }
