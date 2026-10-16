@@ -13,6 +13,10 @@ public class BookService : IBookService
         _context = context;
     }
 
+    public async Task<List<Book>> GetBooksAsync()
+    {
+        return await _context.Books.ToListAsync();
+    }
 
     public async Task<Book?> GetBookByIdAsync(int id)
     {
