@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+namespace WebApplication1.Services;
 
 namespace WebApplication1.Services;
 
@@ -14,10 +15,9 @@ public class BookService : IBookService
         _context = context;
     }
 
-    public async Task<Book?> GetBookByIdAsync(int id)
+    public async Task<List<Book>> GetBooksAsync()
     {
-        return await _context.Books
-            .FirstOrDefaultAsync(b => b.Id == id);
+        return await _context.Books.ToListAsync();
     }
 
     public async Task<Book> AddBookAsync(Book book)
