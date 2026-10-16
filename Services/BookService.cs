@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-namespace WebApplication1.Services;
 
 namespace WebApplication1.Services;
 
