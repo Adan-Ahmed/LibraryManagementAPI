@@ -9,25 +9,25 @@ namespace WebApplication1.Controllers;
 
 public class BooksController : ControllerBase
 {
-    private readonly LibraryDbContext _context;
+    private readonly IBookService _bookService;
 
-    public BooksController(LibraryDbContext context) 
+    public BooksController(IBookService bookService)
     {
-        _context = context;
+        _bookService = bookService;
     }
 
     [HttpGet]
     public async Task<List<Book>> GetBooks() 
     {
 
-        return await _context.Books.ToListAsync();
+        return await _bookService.GetBooksAsync();
 
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetBookByID(int id) 
     {
-        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
         if (book == null)
         {
             return NotFound();
@@ -45,8 +45,8 @@ public class BooksController : ControllerBase
             Author = bookDto.Author
         };
 
-        _context.Books.Add(book);
-        await _context.SaveChangesAsync();
+        _bookService.Books.Add(book);
+        await _bookService.SaveChangesAsync();
         return CreatedAtAction
             (
                nameof(GetBookByID),
@@ -58,7 +58,7 @@ public class BooksController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto updateDto)
     {
-        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null) 
         {
@@ -67,22 +67,22 @@ public class BooksController : ControllerBase
             book.Title = updateDto.Title;
             book.Author = updateDto.Author;
 
-        await _context.SaveChangesAsync();
+        await _bookService.SaveChangesAsync();
         return Ok(book);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
 
         if (book == null)
         {
             return NotFound();
         }
 
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
+        _bookService.Books.Remove(book);
+        await _bookService.SaveChangesAsync();
         return NoContent();
     }
 

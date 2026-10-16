@@ -1,12 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public class BookService : IbookService    
-{ 
-    private readonly DbContext _context;
+namespace WebApplication1.Services;
 
-    public BookService(LibraryDbContext context) 
+public class BookService : IBookService
+{
+    private readonly LibraryDbContext _context;
+
+    public BookService(LibraryDbContext context)
     {
         _context = context;
     }
 
+    public async Task<List<Book>> GetBooksAsync() 
+    {
+        return await _context.Books.FindAsync();
+    }
 }
+
