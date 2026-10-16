@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplication1.Controllers;
@@ -27,7 +26,7 @@ public class BooksController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetBookByID(int id) 
     {
-        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _bookService.GetBookByIdAsync(id);
         if (book == null)
         {
             return NotFound();
@@ -45,44 +44,37 @@ public class BooksController : ControllerBase
             Author = bookDto.Author
         };
 
-        _bookService.Books.Add(book);
-        await _bookService.SaveChangesAsync();
+        var createdBook = await _bookService.AddBookAsync(book);
         return CreatedAtAction
             (
                nameof(GetBookByID),
-               new {id = book.Id},
-               book
+               new {id = createdBook.Id},
+               createdBook
             );
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateBook(int id, [FromBody] UpdateBookDto updateDto)
     {
-        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
+        var book = await _bookService.UpdateBookAsync(id, updateDto);
 
         if (book == null) 
         {
             return NotFound();
         }
-            book.Title = updateDto.Title;
-            book.Author = updateDto.Author;
-
-        await _bookService.SaveChangesAsync();
         return Ok(book);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteBook(int id)
     {
-        var book = await _bookService.Books.FirstOrDefaultAsync(b => b.Id == id);
-
-        if (book == null)
+        var isDeleted = await _bookService.DeleteBookAsync(id);
+        if (!isDeleted)
         {
             return NotFound();
         }
 
-        _bookService.Books.Remove(book);
-        await _bookService.SaveChangesAsync();
+
         return NoContent();
     }
 
